@@ -13,11 +13,13 @@ RUN echo 'deb http://ftp.us.debian.org/debian unstable main contrib non-free' >/
 RUN git config --global user.email "git@localhost" && \
     git config --global user.name "git"
 
-# install git resource (and disable LFS, which we happen not to need)
+# install git resource
 
-RUN mkdir -p /opt/resource/git && \
-    wget https://github.com/concourse/git-resource/archive/master.zip -O /opt/resource/git/git-resource.zip && \
-    unzip /opt/resource/git/git-resource.zip -d /opt/resource/git && \
+RUN mkdir -p /opt/resource/git
+
+ADD git-resource.zip /opt/resource/git/
+
+RUN unzip /opt/resource/git/git-resource.zip -d /opt/resource/git && \
     mv /opt/resource/git/git-resource-master/assets/* /opt/resource/git && \
     rm -r /opt/resource/git/git-resource.zip /opt/resource/git/git-resource-master
 
